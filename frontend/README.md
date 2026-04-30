@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# 🚀 Lead Generation Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack application that analyzes company websites and generates lead insights using automated scraping and signal detection.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🧩 Tech Stack
 
-### `npm start`
+### 🔹 Frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* React.js
+* HTML, CSS
+* Axios
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔹 Backend
 
-### `npm test`
+* FastAPI (Python)
+* Playwright (Web Scraping)
+* Async processing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔹 Database
 
-### `npm run build`
+* SQLite
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ⚙️ Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* 📂 Upload CSV file with company names & websites
+* 🌐 Automatically scrape company websites
+* 🔍 Detect signals:
 
-### `npm run eject`
+  * Hiring activity
+  * QA / Testing presence
+  * SaaS / Product indicators
+  * Website health
+* 📊 Generate lead scores
+* 📝 Provide descriptions for each company
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📁 Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```id="s9kzqj"
+project/
+├── backend/
+│   ├── main.py
+│   ├── scraper.py
+│   ├── utils.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+└── README.md
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🚀 Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 1️⃣ Clone the repository
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```id="x2z9wd"
+git clone https://github.com/RK805/LeadGenerationEngine.git
+cd LeadGenerationEngine
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 2️⃣ Setup Backend
 
-### Analyzing the Bundle Size
+```id="l3n8av"
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Backend runs on:
+👉 http://127.0.0.1:8000
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 3️⃣ Setup Frontend
 
-### Advanced Configuration
+```id="y7pq1e"
+cd frontend
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Frontend runs on:
+👉 http://localhost:3000
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🔗 API Endpoints
 
-### `npm run build` fails to minify
+### POST `/upload`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Upload CSV file to start analysis
+
+### POST `/analyze`
+
+Analyze companies and generate lead scores
+
+---
+
+## 📌 Example Input
+
+```json id="r4bxzv"
+[
+  {
+    "company": "ClickUp",
+    "website": "https://clickup.com"
+  }
+]
+```
+
+---
+
+## 📊 Output Includes
+
+* Score
+* Signals
+* Description
+* Health status
+
+---
+
+
