@@ -1,84 +1,115 @@
+import re
+
+
 def detect_signals(text: str):
-    if not text or len(text) < 100:
+
+    if not text or len(text) < 50:
         return {
-            "qa": None,
-            "hiring": None,
-            "saas": None,
-            "tech": None,
-            "negative": None,
-            "website_health": None
+            "qa": False,
+            "hiring": False,
+            "saas": False,
+            "website_health": 0
         }
 
     text = text.lower()
 
-    # 🔧 QA (slightly expanded)
-    qa_keywords = [
-        "qa engineer", "quality assurance", "test automation",
-        "automation testing", "sdet", "software testing",
-        "testing team", "test engineer"
+    # -------------------------
+    # QA (STRICT)
+    # -------------------------
+    qa_patterns = [
+
+        r"\bqa engineer\b",
+        r"\bquality assurance\b",
+        r"\bquality engineering\b",
+
+        r"\btest automation\b",
+        r"\bautomation testing\b",
+        r"\bsoftware testing\b",
+
+        r"\bend[- ]to[- ]end testing\b",
+
+        r"\bsdet\b"
     ]
 
-    # 🚀 HIRING (IMPORTANT FIX)
-    hiring_keywords = [
-        "we're hiring", "we are hiring",
-        "open positions", "join our team",
-        "apply now", "careers", "jobs",
-        "open roles", "work with us"
+    # -------------------------
+    # HIRING
+    # -------------------------
+    hiring_patterns = [
+
+        r"\bwe are hiring\b",
+        r"\bwe're hiring\b",
+
+        r"\bjoin our team\b",
+
+        r"\bopen positions\b",
+        r"\bopen roles\b",
+
+        r"\bapply now\b",
+
+        r"\bcareers\b"
     ]
 
-    # 🚀 SAAS (IMPORTANT FIX)
-    saas_keywords = [
-        "saas", "subscription", "api",
-        "cloud", "platform", "dashboard",
-        "pricing", "trial", "solutions",
-        "product", "software"
+    # -------------------------
+    # SAAS
+    # -------------------------
+    saas_patterns = [
+
+        r"\bplatform\b",
+        r"\bsoftware\b",
+        r"\bsaas\b",
+
+        r"\bapi\b",
+
+        r"\bdashboard\b",
+
+        r"\banalytics\b",
+
+        r"\bcloud\b",
+
+        r"\bautomation\b",
+
+        r"\bintegration\b",
+
+        r"\bworkflow\b"
     ]
 
-    # 🔧 TECH (same, slightly safer)
-    tech_keywords = [
-        "react", "node", "python", "aws",
-        "azure", "gcp", "docker", "kubernetes"
-    ]
+    # -------------------------
+    # APPLY DETECTION
+    # -------------------------
+    qa = any(
+        re.search(p, text)
+        for p in qa_patterns
+    )
 
-    # 🔍 DETECTION
-    qa_found = [k for k in qa_keywords if k in text]
-    hiring_found = [k for k in hiring_keywords if k in text]
-    saas_found = [k for k in saas_keywords if k in text]
-    tech_found = list(set([k for k in tech_keywords if k in text]))  # remove duplicates
+    hiring = any(
+        re.search(p, text)
+        for p in hiring_patterns
+    )
 
-    # 🌐 WEBSITE HEALTH
+    saas_hits = sum(
+        len(re.findall(p, text))
+        for p in saas_patterns
+    )
+
+    saas = saas_hits >= 1
+
+    # -------------------------
+    # HEALTH
+    # -------------------------
     word_count = len(text.split())
 
     if word_count > 4000:
         health = 2
-    elif word_count > 1500:
+
+    elif word_count > 1000:
         health = 1
+
     else:
-        health = None
+        health = 0
 
     return {
-        "qa": {
-            "value": True,
-            "keywords": qa_found
-        } if qa_found else None,
-
-        "hiring": {
-            "value": True,
-            "count": len(hiring_found),
-            "keywords": hiring_found
-        } if hiring_found else None,
-
-        "saas": {
-            "value": True,
-            "strength": len(saas_found),
-            "keywords": saas_found
-        } if len(saas_found) >= 2 else None,
-
-        "tech": {
-            "count": len(tech_found),
-            "stack": tech_found
-        } if tech_found else None,
-
-        "negative": None,
+        "qa": qa,
+        "hiring": hiring,
+        "saas": saas,
         "website_health": health
     }

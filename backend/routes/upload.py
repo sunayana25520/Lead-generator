@@ -6,7 +6,7 @@ router = APIRouter()
 @router.post("/upload")
 async def upload_csv(file: UploadFile = File(...)):
     filename = (file.filename or "").lower()
-    allowed_types = {"text/csv", "application/vnd.ms-excel", "text/plain"}
+    allowed_types = {"text/csv", "application/vnd.ms-excel", }
     if not filename.endswith(".csv") and file.content_type not in allowed_types:
         raise HTTPException(status_code=400, detail="Only CSV files are allowed.")
 
@@ -21,8 +21,8 @@ async def upload_csv(file: UploadFile = File(...)):
 
     for _, row in df.iterrows():
         cleaned.append({
-            "company": row.get("Company Name") or row.get("company"),
-            "website": row.get("Website") or row.get("website")
+            "company": row.get("Company Name") or row.get("company Name") or row.get("company"),
+            "website": row.get("Website") or row.get("Company Website") or row.get("website")
         })
 
     return {"data": cleaned}

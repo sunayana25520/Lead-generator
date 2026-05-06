@@ -4,17 +4,21 @@ body {
   background: #f3f4f6;
 }
 
+/* NAVBAR */
 .nav {
   background: #3f556b;
   color: white;
   padding: 15px;
   font-size: 18px;
+  font-weight: 600;
 }
 
+/* MAIN CONTAINER */
 .container {
   padding: 20px;
 }
 
+/* TOP BAR */
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -27,19 +31,26 @@ body {
   gap: 10px;
 }
 
+/* BUTTONS */
 button {
   padding: 8px 14px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
   background: #d49a6a;
   color: white;
   cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 .download {
   background: green;
 }
 
+/* CARDS */
 .cards {
   display: flex;
   gap: 20px;
@@ -59,6 +70,11 @@ button {
   color: gray;
 }
 
+.card h2 {
+  margin-top: 10px;
+}
+
+/* SEARCH */
 .search {
   width: 300px;
   padding: 10px;
@@ -67,39 +83,51 @@ button {
   border: 1px solid #ccc;
 }
 
+/* TABLE */
 .table-box {
   background: white;
   border-radius: 10px;
   overflow: auto;
+  max-height: 75vh;
 }
 
+/* TABLE */
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
 
+/* STICKY HEADER */
 thead {
   background: #3f556b;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   border-bottom: 1px solid #eee;
+  text-align: left;
+  vertical-align: top;
 }
 
 tbody tr:hover {
   background: #f9fafb;
 }
 
-select, input {
+/* INPUTS */
+select,
+input {
   padding: 6px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
-/* 🔥 IMPORTANT FIX */
+/* NOTES */
 textarea {
   width: 180px;
   min-height: 40px;
@@ -108,12 +136,6 @@ textarea {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-family: inherit;
-}
-/* STICKY HEADER */
-thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
 }
 
 /* SCORE BADGES */
@@ -122,42 +144,22 @@ thead {
   border-radius: 20px;
   color: white;
   font-weight: bold;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
 }
 
+/* HIGH = GREEN */
 .score.high {
-  background: #22c55e; /* green */
+  background: #22c55e;
 }
 
+/* MEDIUM = ORANGE */
 .score.mid {
-  background: #f59e0b; /* orange */
+  background: #f59e0b;
 }
 
+/* LOW = RED */
 .score.low {
-  background: #ef4444; /* red */
-}
-textarea {
-  width: 180px;
-  min-height: 40px;
-  resize: vertical;
-  padding: 6px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-family: inherit;
-}
-
-.score {
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: white;
-  font-weight: bold;
-}
-
-.score.high { background: #22c55e; }
-.score.mid { background: #f59e0b; }
-.score.low { background: #ef4444; }
-
-thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  background: #ef4444;
 }

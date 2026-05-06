@@ -1,38 +1,178 @@
-def build_output(company, website, signals, score, category):
+# def build_output(company, website, signals, score, category, tech):
 
-    # ✅ YES / NO (instead of empty)
-    hiring = "Yes" if signals.get("hiring") else "No"
-    qa = "Yes" if signals.get("qa") else "No"
+#     if signals.get("qa") and signals.get("hiring"):
+#         pain = "Scaling QA & testing team"
+#         msg = "Saw you're hiring QA engineers—are you scaling testing efforts?"
+#     elif signals.get("hiring"):
+#         pain = "Hiring and team expansion"
+#         msg = "Saw you're hiring—are you expanding your engineering team?"
+#     elif signals.get("qa"):
+#         pain = "Improving QA automation"
+#         msg = "Noticed QA efforts—can help improve testing efficiency."
+#     else:
+#         pain = "General engineering improvements"
+#         msg = "Would love to help improve your engineering workflows."
 
-    # ✅ PRODUCT
-    product = "SaaS" if signals.get("saas") else "Other"
+#     tech_list = []
+#     if tech.get("frontend"):
+#         tech_list.extend(tech["frontend"])
+#     if tech.get("backend"):
+#         tech_list.extend(tech["backend"])
+#     if tech.get("cms"):
+#         tech_list.extend(tech["cms"])
 
-    # ✅ PAIN + MESSAGE (ALWAYS FILLED)
-    if signals.get("qa") and signals.get("hiring"):
-        pain = "Scaling QA & testing team"
-        line = "Saw you're hiring QA engineers—are you scaling testing efforts?"
+#     tech_summary = ", ".join(tech_list) if tech_list else "Website Review for Email Campaign"
+
+#     return {
+#         "company": company,
+#         "website": website,
+#         "Tech": tech_summary,
+#         "Hiring": signals.get("hiring"),
+#         "QA": signals.get("qa"),
+#         "Product": signals.get("saas"),
+#         "Pain Point": pain,
+#         "Message": msg,
+#         "Score": score,
+#         "Status": "Not Contacted",
+#         "Follow-up": ""
+#     }
+
+def build_output(
+    company,
+    website,
+    signals,
+    score,
+    category,
+    tech
+):
+
+    # -------------------------
+    # PAIN POINT + MESSAGE
+    # -------------------------
+    if (
+        signals.get("qa")
+        and signals.get("hiring")
+    ):
+
+        pain = (
+            "Scaling QA & testing team"
+        )
+
+        msg = (
+            "Saw you're hiring QA engineers "
+            "— are you scaling testing efforts?"
+        )
+
     elif signals.get("hiring"):
-        pain = "Hiring and team expansion"
-        line = "Saw you're hiring—are you expanding your engineering team?"
+
+        pain = (
+            "Hiring and team expansion"
+        )
+
+        msg = (
+            "Saw you're hiring — are you "
+            "expanding your engineering team?"
+        )
+
     elif signals.get("qa"):
-        pain = "Improving QA automation"
-        line = "Noticed QA efforts—can help improve testing efficiency."
+
+        pain = (
+            "Improving QA automation"
+        )
+
+        msg = (
+            "Noticed QA efforts — can help "
+            "improve testing efficiency."
+        )
+
+    elif signals.get("saas"):
+
+        pain = (
+            "Scaling product infrastructure"
+        )
+
+        msg = (
+            "Noticed your SaaS/product platform "
+            "— helping teams improve engineering workflows."
+        )
+
     else:
-        pain = "General engineering improvements"
-        line = "Would love to help improve your engineering workflows."
 
-    # ✅ TECH STACK SAFE
-    tech_stack = ", ".join(signals["tech"]["stack"]) if signals.get("tech") else "other"
+        pain = (
+            "General engineering improvements"
+        )
 
+        msg = (
+            "Would love to help improve "
+            "your engineering workflows."
+        )
+
+    # -------------------------
+    # TECH SUMMARY
+    # -------------------------
+    tech_list = []
+
+    if tech.get("frontend"):
+        tech_list.extend(
+            tech["frontend"]
+        )
+
+    if tech.get("backend"):
+        tech_list.extend(
+            tech["backend"]
+        )
+
+    if tech.get("cms"):
+        tech_list.extend(
+            tech["cms"]
+        )
+
+    # remove duplicates
+    tech_list = list(
+        dict.fromkeys(tech_list)
+    )
+
+    tech_summary = (
+        ", ".join(tech_list)
+        if tech_list
+        else "Website Review"
+    )
+
+    # -------------------------
+    # FINAL OUTPUT
+    # -------------------------
     return {
-        "Company Name": company,
-        "Website": website,
-        "Tech Stack": tech_stack,
-        "Hiring Detected": hiring,
-        "QA Signals": qa,
-        "Product Type": product,
+
+        # normalized backend keys
+        "company": company,
+
+        "website": website,
+
+        "Tech": tech_summary,
+
+        "Hiring": signals.get(
+            "hiring"
+        ),
+
+        "QA": signals.get(
+            "qa"
+        ),
+
+        "Product": signals.get(
+            "saas"
+        ),
+
         "Pain Point": pain,
-        "Personalization Line": line,
-        "Lead Score": score,
-        "Category": category
+
+        "Message": msg,
+
+        "Score": score,
+
+        "Category": category,
+
+        "Status": "Not Contacted",
+
+        "Follow-up": "",
+
+        "Notes": ""
     }
